@@ -11,5 +11,6 @@ println("Day 01: ", Day01.increases())
 println("Day 02: ", Day02.dive())
 println("Day 03: ", Day03.diagnostic())
 println("Day 04: ", Day04.winners())
+println("Day 05: ", Day05.solve())
 
 end
