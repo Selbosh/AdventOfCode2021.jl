@@ -6,24 +6,25 @@ using DelimitedFiles: readdlm
 function read_bingo(input = input(4))
     draws = parse.(Int, split(readline(input), ','))
     cards = readdlm(input, Int, skipstart = 1)
+    n = size(cards, 2)
+    cards = reshape(transpose(cards), n, n, :)
     draws, cards
 end
 
-function play_bingo(draws::Array{Int, 1}, cards::Array{Int, 2})
-    n = size(cards, 2)
-    called = reshape(transpose(indexin(cards, draws)), n, n, :)
+function play_bingo(draws::Array{Int, 1}, cards::AbstractArray{Int, 3})
     # On which round would each card win?
-    wins = min.(minimum(maximum(called, dims = 1), dims = 2),
-                minimum(maximum(called, dims = 2), dims = 1))
-    # Part 1
-    when, whom = findmin(vcat(wins...))
-    first = reshape(transpose(cards), n, n, :)[:, :, whom]
-    score = sum(first[called[:, :, whom] .> when]) * draws[when]
-    # Part 2
-    when₂, whom₂ = findmax(vcat(wins...))
-    last = reshape(transpose(cards), n, n, :)[:, :, whom₂]
-    score₂ = sum(last[called[:, :, whom₂] .> when₂]) * draws[when₂]
-    (score, score₂)
+    when = indexin(cards, draws)
+    wins = min.(minimum(maximum(when, dims = 1), dims = 2),
+                minimum(maximum(when, dims = 2), dims = 1)) |> vec
+    # Part 1: first winner
+    t, i = findmin(wins)
+    winner, unmarked = cards[:, :, i], when[:, :, i] .> t
+    score₁ = sum(winner[unmarked]) * draws[t]
+    # Part 2: last winner
+    t, i = findmax(wins)
+    winner, unmarked = cards[:, :, i], when[:, :, i] .> t
+    score₂ = sum(winner[unmarked]) * draws[t]
+    (score₁, score₂)
 end
 
 function winners()
