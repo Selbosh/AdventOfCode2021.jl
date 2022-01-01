@@ -15,6 +15,7 @@ example = IOBuffer("00100
 00010
 01010")
 
-@test Day03.diagnostic(example) == (198, 230)
+# @test Day03.diagnostic(example) == (198, 230)
+@test Day03.solve(example) == (198, 230)
 
 end
