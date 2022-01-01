@@ -13,7 +13,7 @@ example = IOBuffer("0,9 -> 5,9
 0,0 -> 8,8
 5,5 -> 8,2")
 
-lines = Day05.read_segments(example)
-@test (Day05.count_intersections(lines), Day05.count_intersections(lines, true)) == (5, 15)
+starts, ends = Day05.read_segments(example)
+@test Day05.crossings(starts, ends) == (5, 12)
 
 end
