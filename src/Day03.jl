@@ -36,8 +36,8 @@ function gas_rating(x::Vector{UInt16}, negate::Bool = false)::Integer
   only(x[which])
 end
 
-o2_generator(bmat) = gas_rating(bmat, false)
-co2_scrubber(bmat) = gas_rating(bmat, true)
+o2_generator(x) = gas_rating(x, false)
+co2_scrubber(x) = gas_rating(x, true)
 
 function part2(x::Vector{UInt16})::Int
   oxygen = o2_generator(x)
