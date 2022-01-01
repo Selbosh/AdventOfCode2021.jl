@@ -13,5 +13,6 @@ println("Day 03: ", Day03.diagnostic())
 println("Day 04: ", Day04.winners())
 println("Day 05: ", Day05.solve())
 println("Day 06: ", Day06.lanternfish())
+println("Day 07: ", Day07.fuel_cost())
 
 end
